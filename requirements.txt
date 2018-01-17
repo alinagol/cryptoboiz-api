@@ -1,0 +1,4 @@
+Flask==0.12.2
+connexion==1.2
+pymongo
+pandas

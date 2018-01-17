@@ -1,0 +1,120 @@
+swagger: '2.0'
+info:
+  description: API for CryptoBoiz Project
+  version: 1.0.0
+  title: CryptoBoizAPI
+  contact:
+    name: Alina Golovchenko
+    email: golovchenko1994@gmail.com
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+host: localhost:3001
+basePath: /cryptoboiz
+schemes:
+  - http
+#securityDefinitions:
+#  OAuth2:
+#    type: oauth2
+#    flow: implicit
+#    authorizationUrl: 'http://localhost:3001/api/auth'
+#    scopes:
+#      read: Grant read access
+#      write: Grant write access
+paths:
+  /coins/{coinname}:
+    get:
+      summary: All info about the coin
+#      security:
+#        - OAuth2:
+#            - read
+      parameters:
+      - in: path
+        name: coinname
+        required: true
+        type: string
+      operationId: api.items.getCoin
+      responses:
+        '200':
+          description: all info about the coin
+          schema:
+            type: object
+            items:
+              $ref: '#/definitions/CoinInfo'
+  /coins/{coinname}/scores:
+    get:
+      summary: Time series of sentiment and prices of the coin
+#      security:
+#        - OAuth2:
+#            - read
+      parameters:
+      - in: path
+        name: coinname
+        required: true
+        type: string
+      operationId: api.items.getCoinScores
+      responses:
+        '200':
+          description: sentiment and prices for the coin
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/CoinScores'
+#  /coins/{coinname}/tweets:
+#    get:
+#      summary: All the tweets about the coin
+##      security:
+##        - OAuth2:
+##            - read
+#      parameters:
+#      - in: path
+#        name: coinname
+#        required: true
+#        type: string
+#      operationId: api.items.getCoinTweets
+#      responses:
+#        '200':
+#          description: array of tweets
+#          schema:
+#            type: array
+#            items:
+#              $ref: '#/definitions/CoinTweet'
+definitions:
+  CoinInfo:
+    type: object
+    properties:
+      currency:
+        type: string
+      scores:
+        type: array
+        items:
+          $ref: '#/definitions/Score'
+  CoinScores:
+    type: array
+    items:
+      $ref: '#/definitions/Score'
+  Score:
+    type: object
+    properties:
+      date:
+        type: string
+      avg_sent:
+        type: number
+      w_avg_sent:
+        type: number
+      num_tweets:
+        type: number
+      price_eur:
+        type: number
+      24h_volume_eur:
+        type: number
+      available_supply:
+        type: number
+      market_cap_eur:
+        type: number
+      price_btc:
+        type: number
+      total_supply:
+        type: number
+
+
